@@ -98,8 +98,43 @@ retries and the stricter "errors exit 3" flaky policy are documented in
 
 ## E6 — Polish, demo, release (M5)
 
-- [ ] README with cost/latency/cache numbers, case study, calibration
-- [ ] Demo regression script, ADRs 001–004
-- [ ] `v1.0.0`, public repo, topics, parent log updated
+- [x] README with cost/latency/cache numbers, case study, calibration
+- [x] Demo regression script, ADRs 001–004
+- [x] `v1.0.0`, public repo, topics, parent log updated
 
-**Gate evidence:** _pending_
+**Gate evidence:** README has the pitch, Mermaid architecture, mock-measured numbers
+(40-case suite: 100%, cold 160 ms / 40 judge calls, warm 33 ms / 40 hits), the live-cost
+estimate explicitly labelled as an estimate, regression table, Action snippet, trade-offs,
+security notes, and run steps. ADRs 001–004 cover per-case semantics, the regression rule,
+hand-written adapters, and the cache key. `docs/case-study.md`, `docs/calibration.md`,
+`docs/failure-modes.md`, `docs/security.md`, `docs/interview-notes.md`, and
+`docs/ci-integration.md` are committed; example JSON + HTML reports live in
+`docs/examples/`, and `docs/openapi.json` is drift-tested. Docker builds and runs;
+`docker compose up --build` reaches healthy and the API run passes. Walkthrough (13 steps)
+passed: validate 0, artifacts written, cache 0 calls/40 hits, weakened prompt exit 1 with a
+detected regression, hard limit exit 1, calibration written, API run passed, 401 without the
+key, actionlint 0, comment marker present, judge failure tests green, full pytest green,
+image build/run green. Full gate: 235 tests, 91.4% coverage.
+
+## Definition of Done evidence
+
+| Rubric item | Evidence |
+|---|---|
+| One-sentence pitch | `README.md` first blockquote |
+| Architecture + trade-offs | README Mermaid + "Design decisions and trade-offs" |
+| `docker compose up` | `docker-compose.yml`; walkthrough step 7 |
+| CI lint/typecheck/tests + badge | `.github/workflows/ci.yml`, README badge |
+| Failure-path tests | `tests/unit/test_retry.py`, `test_judges.py`, `test_runner.py`, `test_regression.py`, `test_metrics.py` |
+| OpenAPI | `docs/openapi.json`, drift test `tests/unit/test_openapi.py` |
+| `/healthz`, `/readyz`, structured logs | `src/evalgate/api/main.py`, walkthrough step 7 |
+| Why post | `docs/case-study.md` |
+| License | `LICENSE` (MIT) |
+| Conventional commits | `git log --oneline` |
+| Load-test numbers | Not applicable to an eval gate; measured run timings in README and above |
+| Failure modes | `docs/failure-modes.md` |
+| 4 ADRs | `docs/adr/001`–`004` |
+| Observability | `/healthz`, `/readyz`, Redis progress keys, JSON request logs |
+| Security notes | README + `docs/security.md` |
+| Cost note | README mock measurements and live estimate |
+| Demo | `scripts/demo_regression.py`, `docs/demo.md`, `scripts/demo.tape` (recording is a human step) |
+| Interview readiness | `docs/interview-notes.md` |
