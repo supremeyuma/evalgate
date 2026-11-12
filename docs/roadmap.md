@@ -34,12 +34,17 @@ json_schema_valid, regex, llm_judge, latency_ms, cost_usd.
 
 ## E2 — Providers, metrics, runner, CLI (M1)
 
-- [ ] OpenAI-compatible + Anthropic adapters with retry/timeout
-- [ ] Mock/replay providers; deterministic metrics
-- [ ] Bounded-concurrency runner, rich table, exit codes 0/1/2/3
-- [ ] No-network tests
+- [x] OpenAI-compatible + Anthropic adapters with retry/timeout
+- [x] Mock/replay providers; deterministic metrics
+- [x] Bounded-concurrency runner, rich table, exit codes 0/1/2/3
+- [x] No-network tests
 
-**Gate evidence:** _pending_
+**Gate evidence:** `uv run evalgate run examples/support/suite.yaml --mock` → 40/40 pass,
+exit 0, JSON + HTML artifacts written. Classification suite → 30/30. Adapters are covered
+with respx (200, 429→200 with `Retry-After`, 5xx exhaustion, timeout→200, malformed JSON,
+missing usage, 4xx no-retry, Anthropic blocks). Concurrency bound asserted with an in-flight
+counter. Regression truth table covers threshold, overlap, improvement, equal, and
+small-sample cases. 173 tests, 94% coverage, mypy strict clean, zero live calls.
 
 ## E3 — LLM judges, caching, calibration (M2)
 
