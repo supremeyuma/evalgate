@@ -14,9 +14,9 @@ from rich.table import Table
 
 from evalgate import __version__
 from evalgate.config import get_settings
-from evalgate.judges import (
+from evalgate.judges import build_judge_cache
+from evalgate.judges.calibration import (
     CalibrationReport,
-    build_judge_cache,
     run_calibration,
     write_calibration_report,
 )
