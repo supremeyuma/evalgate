@@ -14,6 +14,12 @@ from rich.table import Table
 
 from evalgate import __version__
 from evalgate.config import get_settings
+from evalgate.judges import (
+    CalibrationReport,
+    build_judge_cache,
+    run_calibration,
+    write_calibration_report,
+)
 from evalgate.models.loader import LoadedSuite, SuiteLoadError, load_suite
 from evalgate.models.result import RunReport
 from evalgate.models.suite import suite_json_schema
@@ -99,6 +105,18 @@ def schema(
 
 
 def _print_run_report(report: RunReport) -> None:
+    judge_total = report.summary.judge_calls + report.summary.judge_cache_hits
+    if judge_total:
+        hit_rate = report.summary.judge_cache_hits / judge_total
+        judge_line = (
+            f"\njudge: {report.summary.judge_calls} calls | "
+            f"{report.summary.judge_cache_hits} cached ({hit_rate:.0%} hit) | "
+            f"cost ${report.summary.judge_cost_usd:.4f} | "
+            f"saved ${report.summary.judge_saved_usd:.4f}"
+        )
+    else:
+        judge_line = ""
+
     table = Table(
         title=f"{report.suite_name} — {report.provider}/{report.model_name} ({report.mode})",
         header_style="bold",
@@ -132,6 +150,7 @@ def _print_run_report(report: RunReport) -> None:
         f"Wilson 95% CI: {summary.wilson_low:.1%} - {summary.wilson_high:.1%}\n"
         f"cost: ${summary.cost_usd:.4f} | p95 latency: {summary.p95_latency_ms} ms | "
         f"errors: {summary.errors}"
+        f"{judge_line}"
     )
     if report.limit_breaches:
         summary_text += "\n" + "\n".join(
@@ -154,8 +173,15 @@ async def _execute_run(
     mock: bool,
     options: RunOptions,
     baseline: Baseline | None,
+    no_cache: bool,
 ) -> RunReport:
     settings = get_settings()
+    cache = build_judge_cache(
+        backend=settings.judge_cache_backend,
+        cache_dir=settings.judge_cache_dir,
+        database_url=settings.database_url,
+        no_cache=no_cache,
+    )
     provider = build_provider(loaded.suite.model, force_mock=mock, settings=settings)
     try:
         return await run_suite(
@@ -164,9 +190,11 @@ async def _execute_run(
             judge_model=settings.judge_model,
             options=options,
             baseline=baseline,
+            cache=cache,
         )
     finally:
         await provider.aclose()
+        await cache.aclose()
 
 
 @app.command()
@@ -202,7 +230,6 @@ def run(
     ] = 60.0,
 ) -> None:
     """Run a suite; exit 0 on pass, 1 on gate failure, 2 on config error, 3 on infra error."""
-    del no_cache  # wired to the judge cache in phase E3
     try:
         loaded = load_suite(suite)
     except SuiteLoadError as error:
@@ -224,7 +251,13 @@ def run(
     )
     try:
         report = asyncio.run(
-            _execute_run(loaded, mock=mock, options=options, baseline=baseline_value)
+            _execute_run(
+                loaded,
+                mock=mock,
+                options=options,
+                baseline=baseline_value,
+                no_cache=no_cache,
+            )
         )
     except ProviderConfigError as error:
         typer.echo(f"error: {error}", err=True)
@@ -243,6 +276,131 @@ def run(
         typer.echo(f"wrote {destination}")
 
     raise typer.Exit(code=report.exit_code)
+
+
+async def _execute_calibration(
+    loaded: LoadedSuite,
+    *,
+    mock: bool,
+    judge_models: tuple[str, str],
+    cases: int,
+    timeout_s: float,
+) -> CalibrationReport:
+    settings = get_settings()
+    cache = build_judge_cache(
+        backend=settings.judge_cache_backend,
+        cache_dir=settings.judge_cache_dir,
+        database_url=settings.database_url,
+    )
+    provider = build_provider(loaded.suite.model, force_mock=mock, settings=settings)
+    mode = "mock" if mock or loaded.suite.model.provider == "mock" else "live"
+    try:
+        return await run_calibration(
+            loaded,
+            provider,
+            judge_models=judge_models,
+            cache=cache,
+            max_cases=cases,
+            mode=mode,
+            timeout_s=timeout_s,
+        )
+    finally:
+        await provider.aclose()
+        await cache.aclose()
+
+
+@app.command()
+def calibrate(
+    suite: Annotated[
+        Path | None,
+        typer.Argument(help="Path to a suite with an llm_judge metric."),
+    ] = None,
+    suite_option: Annotated[
+        Path | None,
+        typer.Option("--suite", help="Path to the suite (alternative to the positional form)."),
+    ] = None,
+    judges: Annotated[
+        str,
+        typer.Option(
+            "--judges",
+            help="Two comma-separated judge model names, e.g. gpt-4.1-mini,gpt-4.1.",
+        ),
+    ] = "gpt-4.1-mini,gpt-4.1",
+    cases: Annotated[
+        int,
+        typer.Option("--cases", min=1, help="Maximum number of cases to score."),
+    ] = 30,
+    mock: Annotated[
+        bool,
+        typer.Option("--mock", help="Use the deterministic mock provider (no keys, no network)."),
+    ] = False,
+    output: Annotated[
+        Path | None,
+        typer.Option("--output", "-o", help="Write a markdown calibration report to this path."),
+    ] = None,
+    timeout_s: Annotated[
+        float,
+        typer.Option("--timeout", min=0.1, help="Per-provider-call timeout in seconds."),
+    ] = 60.0,
+) -> None:
+    """Measure agreement between two judges on the same responses."""
+    names = [name.strip() for name in judges.split(",") if name.strip()]
+    if len(names) != 2:
+        typer.echo("error: --judges requires exactly two comma-separated model names", err=True)
+        raise typer.Exit(code=2)
+
+    selected_suite = suite or suite_option or Path("examples/support/suite.yaml")
+    if not selected_suite.is_file():
+        typer.echo(f"error: suite file not found: {selected_suite}", err=True)
+        raise typer.Exit(code=2)
+
+    try:
+        loaded = load_suite(selected_suite)
+    except SuiteLoadError as error:
+        typer.echo(f"error: {error}", err=True)
+        raise typer.Exit(code=2) from None
+
+    try:
+        report = asyncio.run(
+            _execute_calibration(
+                loaded,
+                mock=mock,
+                judge_models=(names[0], names[1]),
+                cases=cases,
+                timeout_s=timeout_s,
+            )
+        )
+    except ProviderConfigError as error:
+        typer.echo(f"error: {error}", err=True)
+        raise typer.Exit(code=2) from None
+    except ValueError as error:
+        typer.echo(f"error: {error}", err=True)
+        raise typer.Exit(code=2) from None
+    except ProviderError as error:
+        typer.echo(f"error: provider failure: {error}", err=True)
+        raise typer.Exit(code=3) from None
+
+    table = Table(title=f"Judge calibration — {report.suite_name} ({report.mode})")
+    table.add_column("Metric")
+    table.add_column("Value", justify="right")
+    table.add_row("Cases scored", str(report.cases_scored))
+    table.add_row("Errors", str(report.errors))
+    table.add_row("Exact agreement", f"{report.exact_agreement:.1%}")
+    table.add_row("Within-1 agreement", f"{report.within_one_agreement:.1%}")
+    table.add_row("Cohen's kappa", f"{report.kappa:.3f}")
+    console.print(table)
+
+    for item in report.disagreements[:10]:
+        console.print(
+            f"[yellow]{item.case_id}[/yellow]: {item.score_a} vs {item.score_b} — "
+            f"{item.rationale_a} / {item.rationale_b}"
+        )
+
+    if output is not None:
+        destination = write_calibration_report(report, output)
+        typer.echo(f"wrote {destination}")
+    else:
+        typer.echo("pass --output to save the markdown report")
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -93,6 +93,14 @@
       <div class="value">{{ report.summary.errors }}</div>
       <div class="muted">{{ report.summary.failed }} failed by metric</div>
     </div>
+    {% if report.summary.judge_calls + report.summary.judge_cache_hits > 0 %}
+    {% set judge_total = report.summary.judge_calls + report.summary.judge_cache_hits %}
+    <div class="card">
+      <div class="label">Judge cache</div>
+      <div class="value">{{ '%.0f' % (100 * report.summary.judge_cache_hits / judge_total) }}% hit</div>
+      <div class="muted">{{ report.summary.judge_cache_hits }} / {{ judge_total }} · saved {{ report.summary.judge_saved_usd | money }}</div>
+    </div>
+    {% endif %}
   </section>
 
   {% for breach in report.limit_breaches %}
