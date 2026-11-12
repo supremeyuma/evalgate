@@ -10,12 +10,14 @@ verified, not "written".
 - [x] MIT license, `.gitignore`, `.gitattributes`, `.editorconfig`
 - [x] Execution plan, spec, master plan, and agent instructions committed
 - [x] Private GitHub remote created and pushed
-- [ ] Tooling: `uv init` with Python 3.12, runtime/dev dependencies, package layout, CLI
+- [x] Tooling: `uv init` with Python 3.12, runtime/dev dependencies, package layout, CLI
       entry point, Ruff/mypy strict/pytest config
-- [ ] Empty `uv run pytest` and `uv run evalgate --help` green
+- [x] Empty `uv run pytest` and `uv run evalgate --help` green
 
-**Evidence:** repository bootstrapped; remote expected at
-<https://github.com/supremeyuma/evalgate>. Tooling evidence pending.
+**Evidence:** `uv 0.13.7`, Python 3.12.16. `uv run evalgate --version` → `evalgate 0.1.0`.
+`uv run pytest` → 3 passed; coverage 83%. `scripts/verify.ps1` → ALL CHECKS PASSED.
+Reserved host ports (5434 Postgres, 6381 Redis, 8001 API) are set in `.env.example`.
+Repository: <https://github.com/supremeyuma/evalgate>.
 
 ## E1 — Domain design and suite format (M0)
 

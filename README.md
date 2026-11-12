@@ -3,7 +3,8 @@
 > A regression-testing system for LLM features: define an eval suite in YAML, run it against
 > any provider, fail the pull request when quality drops below threshold.
 
-**Status:** bootstrapped — build has not started. The execution plan is in this repo.
+**Status:** in development (Phase E1). The execution plan and phase evidence live in
+[`docs/roadmap.md`](docs/roadmap.md).
 
 **Stack:** Python 3.12 · uv · FastAPI · Pydantic v2 · SQLAlchemy 2.0 · PostgreSQL 16 · Redis 7 ·
 ARQ · httpx · pytest · Docker · GitHub Actions
