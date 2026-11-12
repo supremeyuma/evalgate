@@ -31,6 +31,7 @@ To install the CLI on your PATH:
 
 ```powershell
 uv tool install .
+uv tool update-shell   # if ~/.local/bin is not already on PATH
 evalgate --help
 ```
 
