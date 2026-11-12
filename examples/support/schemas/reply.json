@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Support reply",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["answer", "citations", "confidence"],
+  "properties": {
+    "answer": {
+      "type": "string",
+      "minLength": 10,
+      "description": "The reply shown to the customer."
+    },
+    "citations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 3},
+      "description": "References to the policy context that support the answer."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "How fully the policy context answers the question."
+    }
+  }
+}

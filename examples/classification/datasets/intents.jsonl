@@ -1,0 +1,30 @@
+{"id": "int-001", "input": "I was charged twice for the same order.", "expected": "billing"}
+{"id": "int-002", "input": "How do I update the card on file?", "expected": "billing"}
+{"id": "int-003", "input": "Please send me last month's invoice.", "expected": "billing"}
+{"id": "int-004", "input": "Why is my bill higher than usual?", "expected": "billing"}
+{"id": "int-005", "input": "I need a refund for my last payment.", "expected": "billing"}
+{"id": "int-006", "input": "The app crashes when I tap settings.", "expected": "bug"}
+{"id": "int-007", "input": "Exporting a report hangs forever.", "expected": "bug"}
+{"id": "int-008", "input": "I keep getting error 500 when saving.", "expected": "bug"}
+{"id": "int-009", "input": "Search does not find records that exist.", "expected": "bug"}
+{"id": "int-010", "input": "The dashboard shows stale numbers after refresh.", "expected": "bug"}
+{"id": "int-011", "input": "Please cancel my subscription.", "expected": "cancel"}
+{"id": "int-012", "input": "I want to close my account today.", "expected": "cancel"}
+{"id": "int-013", "input": "Stop my plan before the next renewal.", "expected": "cancel"}
+{"id": "int-014", "input": "How do I cancel the annual plan?", "expected": "cancel"}
+{"id": "int-015", "input": "I no longer need the service, please end it.", "expected": "cancel"}
+{"id": "int-016", "input": "Where do I change my email address?", "expected": "how-to"}
+{"id": "int-017", "input": "How do I enable two-factor authentication?", "expected": "how-to"}
+{"id": "int-018", "input": "What is the steps to invite a teammate?", "expected": "how-to"}
+{"id": "int-019", "input": "How can I export my data to CSV?", "expected": "how-to"}
+{"id": "int-020", "input": "Where is the setting to turn off notifications?", "expected": "how-to"}
+{"id": "int-021", "input": "My invoice total does not match the plan price.", "expected": "billing"}
+{"id": "int-022", "input": "The mobile app freezes on the login screen.", "expected": "bug"}
+{"id": "int-023", "input": "I would like to terminate my subscription immediately.", "expected": "cancel"}
+{"id": "int-024", "input": "How do I connect my calendar?", "expected": "how-to"}
+{"id": "int-025", "input": "Why was I billed for an extra seat?", "expected": "billing"}
+{"id": "int-026", "input": "Uploads fail with a network error every time.", "expected": "bug"}
+{"id": "int-027", "input": "Can you walk me through resetting my password?", "expected": "how-to"}
+{"id": "int-028", "input": "Please stop billing me at the end of the month.", "expected": "cancel"}
+{"id": "int-029", "input": "The report totals are wrong compared with the raw data.", "expected": "bug"}
+{"id": "int-030", "input": "Where can I download the desktop app?", "expected": "how-to"}

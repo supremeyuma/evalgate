@@ -1,0 +1,32 @@
+# Support reply quality — schema, judge, latency, and cost.
+# The mock provider makes this suite runnable offline with no keys.
+name: support-reply-quality
+model:
+  provider: mock
+  name: gpt-4.1-mini
+  temperature: 0
+  max_tokens: 512
+prompt: prompts/support.md
+cases_file: datasets/support.jsonl
+metrics:
+  - type: json_schema_valid
+    schema: schemas/reply.json
+  - type: contains
+    value: ["answer", "citations", "confidence"]
+    mode: all
+  - type: llm_judge
+    rubric: rubrics/helpfulness.md
+    threshold: 4.0
+  - type: latency_ms
+    max: 4000
+  - type: cost_usd
+    max: 0.01
+limits:
+  max_cost_usd: 0.50
+  max_p95_latency_ms: 4000
+regression:
+  max_pass_rate_drop: 0.03
+  min_cases: 10
+judge:
+  model: gpt-4.1-mini
+  rubric: rubrics/helpfulness.md
