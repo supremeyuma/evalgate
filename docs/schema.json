@@ -1,0 +1,422 @@
+{
+  "$defs": {
+    "ContainsSpec": {
+      "additionalProperties": false,
+      "description": "Require substrings in the response.\n\n``mode=\"any\"`` passes if at least one value is present; ``mode=\"all\"`` requires all.\nMatching is case-insensitive.",
+      "properties": {
+        "mode": {
+          "default": "any",
+          "enum": [
+            "any",
+            "all"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "type": {
+          "const": "contains",
+          "default": "contains",
+          "title": "Type",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "ContainsSpec",
+      "type": "object"
+    },
+    "CostSpec": {
+      "additionalProperties": false,
+      "description": "Fail when the completion cost exceeds ``max`` USD.",
+      "properties": {
+        "max": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max"
+        },
+        "type": {
+          "const": "cost_usd",
+          "default": "cost_usd",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "title": "CostSpec",
+      "type": "object"
+    },
+    "ExactMatchSpec": {
+      "additionalProperties": false,
+      "description": "Compare the response to ``case.expected`` exactly (optionally normalized).",
+      "properties": {
+        "normalize": {
+          "default": false,
+          "title": "Normalize",
+          "type": "boolean"
+        },
+        "type": {
+          "const": "exact_match",
+          "default": "exact_match",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "title": "ExactMatchSpec",
+      "type": "object"
+    },
+    "JsonSchemaValidSpec": {
+      "additionalProperties": false,
+      "description": "Validate a JSON object parsed from the response against a JSON Schema file.",
+      "properties": {
+        "schema": {
+          "minLength": 1,
+          "title": "Schema",
+          "type": "string"
+        },
+        "type": {
+          "const": "json_schema_valid",
+          "default": "json_schema_valid",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "title": "JsonSchemaValidSpec",
+      "type": "object"
+    },
+    "JudgeSpec": {
+      "additionalProperties": false,
+      "description": "Defaults shared by every ``llm_judge`` metric in the suite.",
+      "properties": {
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "rubric": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rubric"
+        }
+      },
+      "title": "JudgeSpec",
+      "type": "object"
+    },
+    "LatencySpec": {
+      "additionalProperties": false,
+      "description": "Fail when the provider latency exceeds ``max`` milliseconds.",
+      "properties": {
+        "max": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max"
+        },
+        "type": {
+          "const": "latency_ms",
+          "default": "latency_ms",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "title": "LatencySpec",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "description": "Hard run limits. A breach fails the run independently of pass rate.",
+      "properties": {
+        "max_cost_usd": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Cost Usd"
+        },
+        "max_p95_latency_ms": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max P95 Latency Ms"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "LlmJudgeSpec": {
+      "additionalProperties": false,
+      "description": "Score the response against a rubric with an LLM judge.\n\n``threshold`` is the minimum raw rubric score (1-5) required to pass. When ``rubric``\nis omitted, the suite-level ``judge.rubric`` is used.",
+      "properties": {
+        "rubric": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rubric"
+        },
+        "threshold": {
+          "maximum": 5.0,
+          "minimum": 1.0,
+          "title": "Threshold",
+          "type": "number"
+        },
+        "type": {
+          "const": "llm_judge",
+          "default": "llm_judge",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "threshold"
+      ],
+      "title": "LlmJudgeSpec",
+      "type": "object"
+    },
+    "ModelSpec": {
+      "additionalProperties": false,
+      "description": "Which provider and model to call for this suite.",
+      "properties": {
+        "base_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Url"
+        },
+        "max_tokens": {
+          "default": 1024,
+          "exclusiveMinimum": 0,
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "provider": {
+          "enum": [
+            "openai-compatible",
+            "anthropic",
+            "mock"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "temperature": {
+          "default": 0.0,
+          "maximum": 2.0,
+          "minimum": 0.0,
+          "title": "Temperature",
+          "type": "number"
+        }
+      },
+      "required": [
+        "provider",
+        "name"
+      ],
+      "title": "ModelSpec",
+      "type": "object"
+    },
+    "RegexSpec": {
+      "additionalProperties": false,
+      "description": "Require a regular-expression match in the response.",
+      "properties": {
+        "pattern": {
+          "minLength": 1,
+          "title": "Pattern",
+          "type": "string"
+        },
+        "type": {
+          "const": "regex",
+          "default": "regex",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pattern"
+      ],
+      "title": "RegexSpec",
+      "type": "object"
+    },
+    "RegressionSpec": {
+      "additionalProperties": false,
+      "description": "How much pass-rate movement counts as a regression.",
+      "properties": {
+        "max_pass_rate_drop": {
+          "default": 0.03,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Max Pass Rate Drop",
+          "type": "number"
+        },
+        "min_cases": {
+          "default": 10,
+          "minimum": 1,
+          "title": "Min Cases",
+          "type": "integer"
+        }
+      },
+      "title": "RegressionSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A complete eval suite as authored in YAML.",
+  "properties": {
+    "cases_file": {
+      "minLength": 1,
+      "title": "Cases File",
+      "type": "string"
+    },
+    "judge": {
+      "$ref": "#/$defs/JudgeSpec"
+    },
+    "limits": {
+      "$ref": "#/$defs/Limits"
+    },
+    "metrics": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "contains": "#/$defs/ContainsSpec",
+            "cost_usd": "#/$defs/CostSpec",
+            "exact_match": "#/$defs/ExactMatchSpec",
+            "json_schema_valid": "#/$defs/JsonSchemaValidSpec",
+            "latency_ms": "#/$defs/LatencySpec",
+            "llm_judge": "#/$defs/LlmJudgeSpec",
+            "regex": "#/$defs/RegexSpec"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/ExactMatchSpec"
+          },
+          {
+            "$ref": "#/$defs/ContainsSpec"
+          },
+          {
+            "$ref": "#/$defs/JsonSchemaValidSpec"
+          },
+          {
+            "$ref": "#/$defs/RegexSpec"
+          },
+          {
+            "$ref": "#/$defs/LlmJudgeSpec"
+          },
+          {
+            "$ref": "#/$defs/LatencySpec"
+          },
+          {
+            "$ref": "#/$defs/CostSpec"
+          }
+        ]
+      },
+      "minItems": 1,
+      "title": "Metrics",
+      "type": "array"
+    },
+    "model": {
+      "$ref": "#/$defs/ModelSpec"
+    },
+    "name": {
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "prompt": {
+      "minLength": 1,
+      "title": "Prompt",
+      "type": "string"
+    },
+    "regression": {
+      "$ref": "#/$defs/RegressionSpec"
+    }
+  },
+  "required": [
+    "name",
+    "model",
+    "prompt",
+    "cases_file",
+    "metrics"
+  ],
+  "title": "Suite",
+  "type": "object"
+}
