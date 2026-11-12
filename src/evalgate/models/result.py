@@ -20,6 +20,9 @@ class MetricResult(BaseModel):
     passed: bool
     detail: str | None = None
     judge_output: dict[str, Any] | None = None
+    cache_hit: bool = False
+    judge_cost_usd: float = 0.0
+    judge_saved_usd: float = 0.0
 
 
 class CaseResult(BaseModel):
@@ -52,6 +55,10 @@ class RunSummary(BaseModel):
     cost_usd: float = 0.0
     p95_latency_ms: int = 0
     metric_pass_rates: dict[str, float] = Field(default_factory=dict)
+    judge_calls: int = 0
+    judge_cache_hits: int = 0
+    judge_cost_usd: float = 0.0
+    judge_saved_usd: float = 0.0
 
 
 class LimitBreach(BaseModel):
