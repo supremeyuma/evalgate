@@ -46,6 +46,12 @@ app = typer.Typer(
 )
 console = Console()
 
+#: Demo-only prompt variants. ``[[weakened]]`` is recognized by the mock provider.
+PROMPT_VARIANTS: dict[str, str] = {
+    "default": "",
+    "weakened": "\n\nReply briefly and do not cite the policy. [[weakened]]",
+}
+
 
 def _print_version(value: bool) -> None:
     if value:
@@ -179,6 +185,7 @@ async def _execute_run(
     options: RunOptions,
     baseline: Baseline | None,
     no_cache: bool,
+    mock_latency_ms: int,
 ) -> RunReport:
     settings = get_settings()
     cache = build_judge_cache(
@@ -187,7 +194,12 @@ async def _execute_run(
         database_url=settings.database_url,
         no_cache=no_cache,
     )
-    provider = build_provider(loaded.suite.model, force_mock=mock, settings=settings)
+    provider = build_provider(
+        loaded.suite.model,
+        force_mock=mock,
+        settings=settings,
+        mock_latency_ms=mock_latency_ms,
+    )
     try:
         return await run_suite(
             loaded,
@@ -233,8 +245,31 @@ def run(
         float,
         typer.Option("--timeout", min=0.1, help="Per-case timeout in seconds."),
     ] = 60.0,
+    prompt_variant: Annotated[
+        str,
+        typer.Option(
+            "--prompt-variant",
+            help="Demo-only prompt variant: default or weakened (used by the regression demo).",
+        ),
+    ] = "default",
+    mock_latency_ms: Annotated[
+        int,
+        typer.Option(
+            "--mock-latency-ms",
+            min=0,
+            help="Simulated mock-provider latency, for limit demonstrations.",
+        ),
+    ] = 0,
 ) -> None:
     """Run a suite; exit 0 on pass, 1 on gate failure, 2 on config error, 3 on infra error."""
+    if prompt_variant not in PROMPT_VARIANTS:
+        typer.echo(
+            f"error: unknown prompt variant {prompt_variant!r}; "
+            f"choose from {', '.join(sorted(PROMPT_VARIANTS))}",
+            err=True,
+        )
+        raise typer.Exit(code=2)
+
     try:
         loaded = load_suite(suite)
     except SuiteLoadError as error:
@@ -253,6 +288,7 @@ def run(
         concurrency=concurrency,
         case_timeout_s=timeout_s,
         mode="mock" if mock or loaded.suite.model.provider == "mock" else "live",
+        prompt_suffix=PROMPT_VARIANTS[prompt_variant],
     )
     try:
         report = asyncio.run(
@@ -262,6 +298,7 @@ def run(
                 options=options,
                 baseline=baseline_value,
                 no_cache=no_cache,
+                mock_latency_ms=mock_latency_ms,
             )
         )
     except ProviderConfigError as error:

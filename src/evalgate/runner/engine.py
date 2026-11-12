@@ -39,6 +39,7 @@ class RunOptions:
     concurrency: int = 5
     case_timeout_s: float = 60.0
     mode: str = "live"
+    prompt_suffix: str = ""
 
 
 def render_prompt(loaded: LoadedSuite, case_id: str) -> str:
@@ -115,7 +116,9 @@ async def run_suite(
         case = next(item for item in loaded.cases if item.id == case_id)
         async with semaphore:
             try:
-                prompt = _TEMPLATE_ENV.from_string(loaded.prompt_text).render(
+                prompt = _TEMPLATE_ENV.from_string(
+                    loaded.prompt_text + run_options.prompt_suffix
+                ).render(
                     input=case.input,
                     context=case.context or "",
                     expected=case.expected or "",

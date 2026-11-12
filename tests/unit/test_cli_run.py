@@ -47,6 +47,58 @@ def test_run_classification_suite_mock() -> None:
     assert result.exit_code == 0, result.stdout
 
 
+def test_run_weakened_prompt_variant_exits_1(tmp_path: Path) -> None:
+    report_path = tmp_path / "weakened.json"
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            str(REPO_ROOT / "examples" / "support" / "suite.yaml"),
+            "--mock",
+            "--prompt-variant",
+            "weakened",
+            "--json",
+            str(report_path),
+        ],
+    )
+    assert result.exit_code == 1
+    payload = json.loads(report_path.read_text(encoding="utf-8"))
+    assert payload["summary"]["pass_rate"] == 0.0
+
+
+def test_run_unknown_prompt_variant_exits_2() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            str(REPO_ROOT / "examples" / "support" / "suite.yaml"),
+            "--mock",
+            "--prompt-variant",
+            "nonsense",
+        ],
+    )
+    assert result.exit_code == 2
+    assert "unknown prompt variant" in result.stderr
+
+
+def test_run_mock_latency_can_breach_hard_limit(make_suite: Any) -> None:
+    loaded = make_suite(
+        suite_extra="limits:\n  max_p95_latency_ms: 10\n",
+    )
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            str(loaded.path),
+            "--mock",
+            "--mock-latency-ms",
+            "50",
+        ],
+    )
+    assert result.exit_code == 1
+    assert "hard limit" in result.stdout.lower()
+
+
 def test_run_missing_suite_exits_2(tmp_path: Path) -> None:
     result = runner.invoke(app, ["run", str(tmp_path / "nope.yaml"), "--mock"])
     assert result.exit_code == 2
