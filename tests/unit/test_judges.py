@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from decimal import Decimal
+from pathlib import Path
 
 import pytest
 
+from evalgate.judges.cache import LocalJudgeCache
 from evalgate.judges.judge import Judge
 from evalgate.judges.parser import JudgeParseError, normalize_score, parse_judge_output
 from evalgate.judges.rubric import build_judge_prompt
@@ -140,3 +142,93 @@ async def test_judge_provider_failure_records_error(case: Case) -> None:
     )
     assert not result.passed
     assert "provider call failed" in (result.detail or "")
+
+
+class _SequenceProvider:
+    def __init__(self, replies: list[str]) -> None:
+        self._replies = replies
+        self.calls = 0
+
+    async def complete(self, *, prompt: str, case: Case, model: ModelSpec) -> Completion:
+        self.calls += 1
+        return _completion(self._replies.pop(0))
+
+    async def aclose(self) -> None:
+        return None
+
+
+async def test_judge_repairs_malformed_output_once(case: Case) -> None:
+    provider = _SequenceProvider(["not json", '{"score": 4, "rationale": "ok", "confidence": 0.7}'])
+    judge = Judge(
+        provider=provider,
+        base_model=ModelSpec(provider="mock", name="m"),
+        model_name="judge",
+        rubric_text="anchors",
+    )
+    result = await judge.evaluate(
+        case=case,
+        completion=_completion("reply"),
+        spec=LlmJudgeSpec(threshold=4),
+    )
+    assert result.passed
+    assert provider.calls == 2
+    assert result.judge_output is not None
+    assert result.judge_output["repaired"] is True
+
+
+async def test_judge_repair_failure_records_error(case: Case) -> None:
+    provider = _SequenceProvider(["not json", "still not json"])
+    judge = Judge(
+        provider=provider,
+        base_model=ModelSpec(provider="mock", name="m"),
+        model_name="judge",
+        rubric_text="anchors",
+    )
+    result = await judge.evaluate(
+        case=case,
+        completion=_completion("reply"),
+        spec=LlmJudgeSpec(threshold=4),
+    )
+    assert not result.passed
+    assert provider.calls == 2
+    assert "after one repair" in (result.detail or "")
+
+
+async def test_judge_refusal_scores_one_without_repair(case: Case) -> None:
+    provider = _SequenceProvider(["I cannot evaluate this response."])
+    judge = Judge(
+        provider=provider,
+        base_model=ModelSpec(provider="mock", name="m"),
+        model_name="judge",
+        rubric_text="anchors",
+    )
+    result = await judge.evaluate(
+        case=case,
+        completion=_completion("reply"),
+        spec=LlmJudgeSpec(threshold=4),
+    )
+    assert not result.passed
+    assert provider.calls == 1
+    assert result.judge_output is not None
+    assert result.judge_output["refusal"] is True
+    assert result.judge_output["score"] == 1
+
+
+async def test_judge_cache_hit_skips_provider(case: Case, tmp_path: Path) -> None:
+    provider = _SequenceProvider(['{"score": 5, "rationale": "great", "confidence": 0.9}'])
+    cache = LocalJudgeCache(tmp_path / "cache.sqlite3")
+    judge = Judge(
+        provider=provider,
+        base_model=ModelSpec(provider="mock", name="m"),
+        model_name="judge",
+        rubric_text="anchors",
+        cache=cache,
+    )
+    completion = _completion("reply")
+    first = await judge.evaluate(case=case, completion=completion, spec=LlmJudgeSpec(threshold=4))
+    second = await judge.evaluate(case=case, completion=completion, spec=LlmJudgeSpec(threshold=4))
+    assert provider.calls == 1
+    assert first.cache_hit is False
+    assert second.cache_hit is True
+    assert second.judge_saved_usd >= 0
+    await cache.aclose()
