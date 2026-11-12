@@ -76,6 +76,9 @@ jobs:
       - name: Tests (offline providers, live services)
         run: uv run pytest --cov --cov-report=term-missing --cov-report=xml
 
+      - name: Docker build
+        run: docker build -t evalgate:ci .
+
       - name: Upload coverage
         if: always()
         uses: actions/upload-artifact@v4
