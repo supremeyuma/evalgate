@@ -65,12 +65,20 @@ records the cache key.
 
 ## E4 — Persistence, concurrency, baselines (M3)
 
-- [ ] SQLAlchemy + Alembic schema, ARQ worker
-- [ ] Wilson interval, p95, cost aggregation
-- [ ] Regression rule with interval overlap + truth-table tests
-- [ ] Thin API with API-key auth
+- [x] SQLAlchemy + Alembic schema, ARQ worker
+- [x] Wilson interval, p95, cost aggregation
+- [x] Regression rule with interval overlap + truth-table tests
+- [x] Thin API with API-key auth
 
-**Gate evidence:** _pending_
+**Gate evidence:** Alembic `0001` upgrades and downgrades cleanly against Postgres 16
+(`tests/integration/test_migrations.py`). Repository covers create/record/finalize, baseline
+by `git_ref` or explicit id, list runs, and idempotent result upserts (a repeated
+`record_results` leaves the row count unchanged). API: `X-API-Key` auth (401 without),
+`POST /v1/runs` from a suite path or inline YAML, `GET /v1/runs/{id}`,
+`report.{json,html}`, `/healthz`, `/readyz`, structured request logs with `X-Request-ID`,
+OpenAPI at `/openapi.json`. ARQ worker executes the same service and publishes progress to
+Redis (`evalgate:progress:<id>` = 100). 215 tests (16 integration against real Postgres and
+Redis containers), 92% coverage, mypy strict clean.
 
 ## E5 — GitHub Action and PR reporting (M4)
 
