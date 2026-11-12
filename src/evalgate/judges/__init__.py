@@ -11,13 +11,6 @@ from evalgate.judges.cache import (
     build_judge_cache,
     compute_cache_key,
 )
-from evalgate.judges.calibration import (
-    CalibrationReport,
-    cohen_kappa,
-    render_calibration_markdown,
-    run_calibration,
-    write_calibration_report,
-)
 from evalgate.judges.judge import Judge, is_refusal
 from evalgate.judges.parser import (
     JudgeParseError,
@@ -29,7 +22,6 @@ from evalgate.judges.rubric import build_judge_prompt
 
 __all__ = [
     "CacheEntry",
-    "CalibrationReport",
     "Judge",
     "JudgeCache",
     "JudgeParseError",
@@ -39,12 +31,8 @@ __all__ = [
     "PostgresJudgeCache",
     "build_judge_cache",
     "build_judge_prompt",
-    "cohen_kappa",
     "compute_cache_key",
     "is_refusal",
     "normalize_score",
     "parse_judge_output",
-    "render_calibration_markdown",
-    "run_calibration",
-    "write_calibration_report",
 ]
