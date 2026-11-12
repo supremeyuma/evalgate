@@ -138,3 +138,12 @@ image build/run green. Full gate: 235 tests, 91.4% coverage.
 | Cost note | README mock measurements and live estimate |
 | Demo | `scripts/demo_regression.py`, `docs/demo.md`, `scripts/demo.tape` (recording is a human step) |
 | Interview readiness | `docs/interview-notes.md` |
+
+**Release verification (2026-11-12):** fresh clone to `%TEMP%\evalgate-smoke` → `uv sync` →
+`scripts/verify.ps1` → 235 passed, ALL CHECKS PASSED. CI on the release commit
+(`b726d12`) → success (run 43288392247). `gitleaks detect` over 40 commits → no leaks; a
+manual `sk-`/`ghp_` scan → no matches. `v1.0.0` annotated tag pushed. Repository public with
+description and topics `llm, evals, ci, github-actions, python, llm-evaluation, pytest`.
+`ai-engineering-pivot/progress/log.md` updated (local commit `907fed7`; that repo has no
+remote configured, so it was not pushed). Marketplace listing and demo GIF remain human steps;
+instructions are in `docs/ci-integration.md` and `scripts/demo.tape`.

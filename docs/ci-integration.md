@@ -96,3 +96,17 @@ dependabot PRs stay green; run the live job conditionally:
 `scripts/demo_ci.ps1` reproduces the action's steps locally with the mock provider: validate,
 load the committed baseline, run, render the comment, and print artifact paths. Use it when
 Docker or `act` is unavailable.
+
+## Publishing the Action (human step)
+
+The repository is public and `action.yml` is at the root, so the Action is already usable as
+`uses: supremeyuma/evalgate@v1`. Marketplace listing is a manual, one-time step:
+
+1. Open <https://github.com/supremeyuma/evalgate/releases> and edit `v1.0.0` (or create a new
+   release).
+2. Tick **Publish this Action to the GitHub Marketplace**.
+3. Accept the Marketplace Developer Agreement, choose the **Continuous integration** category,
+   and confirm the Action name `EvalGate`.
+4. Publish. The listing points at the release tag; future releases update it.
+
+Before publishing, confirm the README badge renders and the release tag is the green CI commit.
