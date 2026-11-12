@@ -1,0 +1,5 @@
+{"id":"t-001","input":"I was charged twice this month.","expected":"billing"}
+{"id":"t-002","input":"The export button hangs forever.","expected":"bug"}
+{"id":"t-003","input":"Please cancel my subscription.","expected":"cancel"}
+{"id":"t-004","input":"How do I invite a teammate?","expected":"how-to"}
+{"id":"t-005","input":"My invoice total looks wrong.","expected":"billing"}

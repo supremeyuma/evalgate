@@ -1,0 +1,184 @@
+name: EvalGate
+description: Run an eval suite, compare with a baseline, and fail the pull request on a real quality regression.
+author: supremyuma
+
+branding:
+  icon: check-circle
+  color: blue
+
+inputs:
+  suite:
+    description: Suite YAML path, relative to working-directory.
+    required: true
+  working-directory:
+    description: Directory that contains the suite and its assets.
+    required: false
+    default: "."
+  baseline:
+    description: Git ref to load the baseline from, or a report path. Use "none" to skip.
+    required: false
+    default: main
+  baseline-report:
+    description: Baseline report path inside working-directory / the baseline ref.
+    required: false
+    default: .evalgate/baseline.json
+  mock:
+    description: Force the deterministic mock provider (no keys, no network).
+    required: false
+    default: "false"
+  concurrency:
+    description: Maximum in-flight provider calls.
+    required: false
+    default: "5"
+  fail-on-regression:
+    description: Fail the job when the run exits non-zero.
+    required: false
+    default: "true"
+  comment:
+    description: Post or update the PR comment (pull_request events only).
+    required: false
+    default: "true"
+  github-token:
+    description: Token used to read and write the PR comment.
+    required: false
+    default: ${{ github.token }}
+  python-version:
+    description: Python version for the tool environment.
+    required: false
+    default: "3.12"
+
+outputs:
+  pass-rate:
+    description: Fraction of cases that passed.
+    value: ${{ steps.run.outputs.pass_rate }}
+  exit-code:
+    description: EvalGate exit code (0 pass, 1 gate failure, 2 config, 3 infra).
+    value: ${{ steps.run.outputs.exit_code }}
+  report-json:
+    description: Path to the JSON report.
+    value: ${{ steps.run.outputs.report_json }}
+  report-html:
+    description: Path to the standalone HTML report.
+    value: ${{ steps.run.outputs.report_html }}
+
+runs:
+  using: composite
+  steps:
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+        enable-cache: true
+
+    - name: Resolve baseline
+      id: baseline
+      shell: bash
+      env:
+        WORKDIR: ${{ inputs.working-directory }}
+        BASELINE: ${{ inputs.baseline }}
+        BASELINE_REPORT: ${{ inputs.baseline-report }}
+        EVENT_NAME: ${{ github.event_name }}
+        PR_BASE_REF: ${{ github.base_ref }}
+      run: |
+        set -euo pipefail
+        arg=""
+        if [ -n "${BASELINE}" ] && [ "${BASELINE}" != "none" ]; then
+          if [ -f "${WORKDIR}/${BASELINE}" ]; then
+            arg="--baseline ${WORKDIR}/${BASELINE}"
+          else
+            ref="${BASELINE}"
+            if [ "${BASELINE}" = "main" ] && [ "${EVENT_NAME}" = "pull_request" ] && [ -n "${PR_BASE_REF}" ]; then
+              ref="${PR_BASE_REF}"
+            fi
+            git fetch --no-tags --depth=1 origin "${ref}" >/dev/null 2>&1 || true
+            if [ "${WORKDIR}" = "." ]; then
+              rel="${BASELINE_REPORT}"
+            else
+              rel="${WORKDIR}/${BASELINE_REPORT}"
+            fi
+            if git show "origin/${ref}:${rel}" > "${RUNNER_TEMP}/evalgate-baseline.json" 2>/dev/null; then
+              arg="--baseline ${RUNNER_TEMP}/evalgate-baseline.json"
+              echo "Loaded baseline from origin/${ref}:${rel}"
+            else
+              echo "No baseline at origin/${ref}:${rel}; running without one"
+            fi
+          fi
+        fi
+        echo "arg=${arg}" >> "${GITHUB_OUTPUT}"
+
+    - name: Run suite
+      id: run
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        WORKDIR: ${{ inputs.working-directory }}
+        SUITE: ${{ inputs.suite }}
+        MOCK: ${{ inputs.mock }}
+        CONCURRENCY: ${{ inputs.concurrency }}
+        BASELINE_ARG: ${{ steps.baseline.outputs.arg }}
+        FAIL_ON_REGRESSION: ${{ inputs.fail-on-regression }}
+        PYTHON_VERSION: ${{ inputs.python-version }}
+      run: |
+        set +e
+        mkdir -p "${WORKDIR}/reports"
+        args=(run "${WORKDIR}/${SUITE}" --concurrency "${CONCURRENCY}"
+              --json "${WORKDIR}/reports/evalgate.json"
+              --html "${WORKDIR}/reports/evalgate.html")
+        if [ "${MOCK}" = "true" ]; then args+=(--mock); fi
+        if [ -n "${BASELINE_ARG}" ]; then
+          read -r -a base_args <<< "${BASELINE_ARG}"
+          args+=("${base_args[@]}")
+        fi
+        uv run --project "${ACTION_PATH}" --python "${PYTHON_VERSION:-3.12}" \
+          evalgate "${args[@]}"
+        code=$?
+        echo "exit_code=${code}" >> "${GITHUB_OUTPUT}"
+        echo "report_json=${WORKDIR}/reports/evalgate.json" >> "${GITHUB_OUTPUT}"
+        echo "report_html=${WORKDIR}/reports/evalgate.html" >> "${GITHUB_OUTPUT}"
+        if [ -f "${WORKDIR}/reports/evalgate.json" ]; then
+          rate=$(uv run --project "${ACTION_PATH}" python -c \
+            "import json;print(json.load(open('${WORKDIR}/reports/evalgate.json'))['summary']['pass_rate'])")
+          echo "pass_rate=${rate}" >> "${GITHUB_OUTPUT}"
+        fi
+        if [ "${FAIL_ON_REGRESSION}" = "true" ]; then
+          exit "${code}"
+        fi
+        exit 0
+
+    - name: Upload reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: evalgate-report
+        path: |
+          ${{ inputs.working-directory }}/reports/evalgate.json
+          ${{ inputs.working-directory }}/reports/evalgate.html
+        if-no-files-found: warn
+
+    - name: Comment on pull request
+      if: ${{ inputs.comment == 'true' && github.event_name == 'pull_request' }}
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        WORKDIR: ${{ inputs.working-directory }}
+        GH_TOKEN: ${{ inputs.github-token }}
+        REPO: ${{ github.repository }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        SERVER_URL: ${{ github.server_url }}
+      run: |
+        set +e
+        report="${WORKDIR}/reports/evalgate.json"
+        if [ ! -f "${report}" ]; then
+          echo "No report to comment on"
+          exit 0
+        fi
+        base_arg=""
+        if [ -f "${RUNNER_TEMP}/evalgate-baseline.json" ]; then
+          base_arg="--baseline ${RUNNER_TEMP}/evalgate-baseline.json"
+        fi
+        artifact_url="${SERVER_URL}/${REPO}/actions/runs/${{ github.run_id }}"
+        uv run --project "${ACTION_PATH}" evalgate comment \
+          --report "${report}" ${base_arg} \
+          --artifact-url "${artifact_url}" \
+          --repo "${REPO}" --pr "${PR_NUMBER}"
+        exit 0

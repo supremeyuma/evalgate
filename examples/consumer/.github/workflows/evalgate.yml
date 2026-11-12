@@ -1,0 +1,29 @@
+# Copy this workflow into a consumer repository as `.github/workflows/evalgate.yml`.
+# In this repo the action is referenced with `uses: ./` because the action lives at the
+# repository root; in a separate repository use `uses: supremeyuma/evalgate@v1`.
+name: evals
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  evalgate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: EvalGate
+        uses: ./
+        with:
+          suite: suite.yaml
+          working-directory: examples/consumer
+          baseline: main
+          mock: true
+          comment: true

@@ -24,7 +24,12 @@ from evalgate.models.loader import LoadedSuite, SuiteLoadError, load_suite
 from evalgate.models.result import RunReport
 from evalgate.models.suite import suite_json_schema
 from evalgate.providers import ProviderConfigError, ProviderError, build_provider
-from evalgate.report import write_html_report, write_json_report
+from evalgate.report import (
+    post_or_update_comment,
+    render_pr_comment,
+    write_html_report,
+    write_json_report,
+)
 from evalgate.runner import (
     Baseline,
     RunOptions,
@@ -118,7 +123,7 @@ def _print_run_report(report: RunReport) -> None:
         judge_line = ""
 
     table = Table(
-        title=f"{report.suite_name} — {report.provider}/{report.model_name} ({report.mode})",
+        title=f"{report.suite_name} - {report.provider}/{report.model_name} ({report.mode})",
         header_style="bold",
     )
     table.add_column("Case", overflow="fold")
@@ -160,7 +165,7 @@ def _print_run_report(report: RunReport) -> None:
         baseline = report.baseline
         color = "red" if baseline.regression.is_regression else "cyan"
         summary_text += (
-            f"\n[{color}]baseline {baseline.label}: {baseline.baseline_pass_rate:.1%} → "
+            f"\n[{color}]baseline {baseline.label}: {baseline.baseline_pass_rate:.1%} -> "
             f"{baseline.current_pass_rate:.1%} (delta {baseline.delta:+.1%}); "
             f"{baseline.regression.reason}[/{color}]"
         )
@@ -380,7 +385,7 @@ def calibrate(
         typer.echo(f"error: provider failure: {error}", err=True)
         raise typer.Exit(code=3) from None
 
-    table = Table(title=f"Judge calibration — {report.suite_name} ({report.mode})")
+    table = Table(title=f"Judge calibration - {report.suite_name} ({report.mode})")
     table.add_column("Metric")
     table.add_column("Value", justify="right")
     table.add_row("Cases scored", str(report.cases_scored))
@@ -392,7 +397,7 @@ def calibrate(
 
     for item in report.disagreements[:10]:
         console.print(
-            f"[yellow]{item.case_id}[/yellow]: {item.score_a} vs {item.score_b} — "
+            f"[yellow]{item.case_id}[/yellow]: {item.score_a} vs {item.score_b} - "
             f"{item.rationale_a} / {item.rationale_b}"
         )
 
@@ -401,6 +406,72 @@ def calibrate(
         typer.echo(f"wrote {destination}")
     else:
         typer.echo("pass --output to save the markdown report")
+
+
+@app.command()
+def comment(
+    report: Annotated[
+        Path,
+        typer.Option("--report", exists=True, help="Run JSON report to render."),
+    ],
+    baseline: Annotated[
+        Path | None,
+        typer.Option("--baseline", exists=True, help="Optional baseline JSON report."),
+    ] = None,
+    artifact_url: Annotated[
+        str | None,
+        typer.Option("--artifact-url", help="Link to uploaded artifacts."),
+    ] = None,
+    output: Annotated[
+        Path | None,
+        typer.Option("--output", "-o", help="Write the markdown comment to this file."),
+    ] = None,
+    repo: Annotated[
+        str | None,
+        typer.Option("--repo", help="owner/name, required to post the comment."),
+    ] = None,
+    pr: Annotated[
+        int | None,
+        typer.Option("--pr", min=1, help="Pull request number."),
+    ] = None,
+    token: Annotated[
+        str | None,
+        typer.Option("--token", help="GitHub token; falls back to GH_TOKEN."),
+    ] = None,
+) -> None:
+    """Render the idempotent PR comment, and optionally post it with gh api."""
+    try:
+        current = RunReport.model_validate_json(report.read_text(encoding="utf-8"))
+        baseline_report = (
+            RunReport.model_validate_json(baseline.read_text(encoding="utf-8"))
+            if baseline is not None
+            else None
+        )
+    except (OSError, ValueError) as error:
+        typer.echo(f"error: could not read report: {error}", err=True)
+        raise typer.Exit(code=2) from None
+
+    markdown = render_pr_comment(current, baseline=baseline_report, artifact_url=artifact_url)
+    if output is not None:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(markdown, encoding="utf-8", newline="\n")
+        typer.echo(f"wrote {output}")
+    else:
+        typer.echo(markdown, nl=False)
+
+    if repo is None and pr is None:
+        return
+    if repo is None or pr is None:
+        typer.echo("error: --repo and --pr must be provided together", err=True)
+        raise typer.Exit(code=2)
+    if post_or_update_comment(repo=repo, pr_number=pr, body=markdown, token=token):
+        typer.echo(f"posted comment to {repo}#{pr}")
+    else:
+        typer.echo(
+            "notice: could not post the comment (read-only token or missing gh); "
+            "the markdown was still rendered",
+            err=True,
+        )
 
 
 if __name__ == "__main__":  # pragma: no cover

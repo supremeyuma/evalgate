@@ -1,0 +1,19 @@
+name: consumer-intent-smoke
+model:
+  provider: mock
+  name: gpt-4.1-mini
+  temperature: 0
+  max_tokens: 16
+prompt: prompts/classify.md
+cases_file: datasets/tickets.jsonl
+metrics:
+  - type: exact_match
+    normalize: true
+  - type: latency_ms
+    max: 2000
+limits:
+  max_cost_usd: 0.05
+  max_p95_latency_ms: 2000
+regression:
+  max_pass_rate_drop: 0.10
+  min_cases: 5

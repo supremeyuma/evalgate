@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "suite_name": "consumer-intent-smoke",
+  "provider": "mock",
+  "model_name": "gpt-4.1-mini",
+  "mode": "mock",
+  "started_at": "2026-11-12T19:03:21.235378Z",
+  "finished_at": "2026-11-12T19:03:21.237379Z",
+  "duration_ms": 2,
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "errors": 0,
+    "pass_rate": 1.0,
+    "wilson_low": 0.5655175352168251,
+    "wilson_high": 1.0,
+    "cost_usd": 0.0,
+    "p95_latency_ms": 0,
+    "metric_pass_rates": {
+      "exact_match": 1.0,
+      "latency_ms": 1.0
+    },
+    "judge_calls": 0,
+    "judge_cache_hits": 0,
+    "judge_cost_usd": 0.0,
+    "judge_saved_usd": 0.0
+  },
+  "cases": [
+    {
+      "case_id": "t-001",
+      "passed": true,
+      "response": "billing",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "exact_match",
+          "score": 1.0,
+          "passed": true,
+          "detail": "match",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 2000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [],
+      "error": null
+    },
+    {
+      "case_id": "t-002",
+      "passed": true,
+      "response": "bug",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "exact_match",
+          "score": 1.0,
+          "passed": true,
+          "detail": "match",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 2000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [],
+      "error": null
+    },
+    {
+      "case_id": "t-003",
+      "passed": true,
+      "response": "cancel",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "exact_match",
+          "score": 1.0,
+          "passed": true,
+          "detail": "match",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 2000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [],
+      "error": null
+    },
+    {
+      "case_id": "t-004",
+      "passed": true,
+      "response": "how-to",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "exact_match",
+          "score": 1.0,
+          "passed": true,
+          "detail": "match",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 2000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [],
+      "error": null
+    },
+    {
+      "case_id": "t-005",
+      "passed": true,
+      "response": "billing",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "exact_match",
+          "score": 1.0,
+          "passed": true,
+          "detail": "match",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 2000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [],
+      "error": null
+    }
+  ],
+  "limit_breaches": [],
+  "baseline": null,
+  "exit_code": 0
+}
