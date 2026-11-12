@@ -98,6 +98,11 @@ See [`adr/001-per-case-semantics.md`](adr/001-per-case-semantics.md).
 | Code | Meaning |
 |---|---|
 | `0` | Valid suite / passing run |
-| `1` | Quality gate failed (regression or hard limit) |
+| `1` | Quality gate failed: a hard limit was breached, a real regression was detected, or (without a baseline) at least one case failed |
 | `2` | Invalid suite, configuration, or usage |
-| `3` | Infrastructure error (provider unreachable after retries) |
+| `3` | Infrastructure error: at least one case errored (provider unreachable after retries, timeout, or template error) |
+
+With `--baseline`, the gate is relative: cases that also failed in the baseline do not fail
+the pull request on their own. Without a baseline, any failing case fails the first run.
+Hard limits always fail the run. Regression requires both a drop beyond
+`max_pass_rate_drop` and non-overlapping Wilson 95% intervals (ADR-002).

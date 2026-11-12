@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EvalGate report — {{ report.suite_name }}</title>
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --pass: #067647;
+      --pass-bg: #ecfdf3;
+      --fail: #b42318;
+      --fail-bg: #fef3f2;
+      --warn: #b54708;
+      --accent: #175cd3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 40px 24px 64px;
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: #f9fafb;
+    }
+    main { max-width: 1080px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+    h1 { font-size: 24px; margin: 0; letter-spacing: -0.02em; }
+    h2 { font-size: 16px; margin: 32px 0 12px; }
+    .muted { color: var(--muted); }
+    .verdict {
+      display: inline-block; padding: 6px 12px; border-radius: 999px;
+      font-weight: 600; font-size: 13px;
+    }
+    .verdict.pass { color: var(--pass); background: var(--pass-bg); }
+    .verdict.fail { color: var(--fail); background: var(--fail-bg); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 24px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+    .card .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .card .value { font-size: 22px; font-weight: 650; margin-top: 4px; }
+    .banner { margin-top: 20px; padding: 14px 16px; border-radius: 10px; border: 1px solid; }
+    .banner.fail { color: var(--fail); background: var(--fail-bg); border-color: #fecdca; }
+    .banner.warn { color: var(--warn); background: #fffaeb; border-color: #fedf89; }
+    .banner.info { color: var(--accent); background: #eff8ff; border-color: #b2ddff; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; background: #fcfcfd; }
+    tr:last-child td { border-bottom: none; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .pill.pass { color: var(--pass); background: var(--pass-bg); }
+    .pill.fail { color: var(--fail); background: var(--fail-bg); }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
+    details { margin-top: 8px; }
+    summary { cursor: pointer; color: var(--accent); }
+    footer { margin-top: 40px; color: var(--muted); font-size: 12px; }
+    @media print { body { background: #fff; padding: 0; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>{{ report.suite_name }}</h1>
+      <div class="muted">
+        {{ report.provider }}/{{ report.model_name }} ·
+        {{ report.mode }} mode ·
+        run {{ report.duration_ms }} ms
+      </div>
+    </div>
+    {% if report.exit_code == 0 %}
+      <span class="verdict pass">PASSED</span>
+    {% else %}
+      <span class="verdict fail">FAILED (exit {{ report.exit_code }})</span>
+    {% endif %}
+  </header>
+
+  <section class="cards">
+    <div class="card">
+      <div class="label">Pass rate</div>
+      <div class="value">{{ report.summary.pass_rate | pct }}</div>
+      <div class="muted">{{ report.summary.passed }} / {{ report.summary.total }} cases</div>
+    </div>
+    <div class="card">
+      <div class="label">Wilson 95% CI</div>
+      <div class="value" style="font-size: 18px">{{ report.summary.wilson_low | pct }} – {{ report.summary.wilson_high | pct }}</div>
+    </div>
+    <div class="card">
+      <div class="label">Total cost</div>
+      <div class="value">{{ report.summary.cost_usd | money }}</div>
+      <div class="muted">nearest-rank p95 {{ report.summary.p95_latency_ms }} ms</div>
+    </div>
+    <div class="card">
+      <div class="label">Errors</div>
+      <div class="value">{{ report.summary.errors }}</div>
+      <div class="muted">{{ report.summary.failed }} failed by metric</div>
+    </div>
+  </section>
+
+  {% for breach in report.limit_breaches %}
+    <div class="banner fail"><strong>Hard limit breached.</strong> {{ breach.message }}</div>
+  {% endfor %}
+
+  {% if report.baseline %}
+    <div class="banner {{ 'fail' if report.baseline.regression.is_regression else 'info' }}">
+      <strong>Baseline {{ report.baseline.label }}:</strong>
+      {{ report.baseline.baseline_pass_rate | pct }} → {{ report.baseline.current_pass_rate | pct }}
+      (delta {{ report.baseline.delta | pct }}).
+      {{ report.baseline.regression.reason }}
+    </div>
+  {% endif %}
+
+  <h2>Cases</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Case</th><th>Verdict</th><th>Failing metric</th><th>Detail</th><th>Latency</th><th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for case in report.cases %}
+      {% set failing = case.metrics | rejectattr("passed") | list %}
+      <tr>
+        <td><code>{{ case.case_id }}</code>{% if case.tags %}<div class="muted">{{ case.tags | join(", ") }}</div>{% endif %}</td>
+        <td>
+          {% if case.passed %}
+            <span class="pill pass">pass</span>
+          {% else %}
+            <span class="pill fail">fail</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if case.error %}
+            <code>run</code>
+          {% else %}
+            {% for metric in failing %}<code>{{ metric.metric }}</code>{% if not loop.last %}, {% endif %}{% endfor %}
+          {% endif %}
+        </td>
+        <td>
+          {% if case.error %}
+            {{ case.error }}
+          {% else %}
+            {% for metric in failing %}
+              <div{% if not loop.last %} style="margin-bottom:6px"{% endif %}>{{ metric.detail }}</div>
+              {% if metric.judge_output %}
+                <details><summary>judge rationale</summary>{{ metric.judge_output.rationale }}</details>
+              {% endif %}
+            {% endfor %}
+            {% if not failing %}<span class="muted">all metrics passed</span>{% endif %}
+          {% endif %}
+        </td>
+        <td>{{ case.latency_ms }} ms</td>
+        <td>{{ case.cost_usd | money }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <footer>Generated by EvalGate {{ generated }}. This file is self-contained; no external assets.</footer>
+</main>
+</body>
+</html>
