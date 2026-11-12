@@ -56,6 +56,7 @@ def build_provider(
     mock_fixtures: Mapping[str, str] | None = None,
     replay_dir: str | Path | None = None,
     client: httpx.AsyncClient | None = None,
+    mock_latency_ms: int = 0,
 ) -> Provider:
     """Construct the provider a suite asks for.
 
@@ -66,7 +67,7 @@ def build_provider(
     if replay_dir is not None:
         return ReplayProvider(replay_dir)
     if force_mock or model.provider == "mock":
-        return MockProvider(mock_fixtures)
+        return MockProvider(mock_fixtures, simulated_latency_ms=mock_latency_ms)
 
     config = settings or get_settings()
 

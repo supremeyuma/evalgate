@@ -1,0 +1,2877 @@
+{
+  "schema_version": 1,
+  "suite_name": "support-reply-quality",
+  "provider": "mock",
+  "model_name": "gpt-4.1-mini",
+  "mode": "mock",
+  "started_at": "2026-11-12T19:12:36.670686Z",
+  "finished_at": "2026-11-12T19:12:36.693695Z",
+  "duration_ms": 22,
+  "summary": {
+    "total": 40,
+    "passed": 40,
+    "failed": 0,
+    "errors": 0,
+    "pass_rate": 1.0,
+    "wilson_low": 0.9123783988027135,
+    "wilson_high": 1.0,
+    "cost_usd": 0.0,
+    "p95_latency_ms": 0,
+    "metric_pass_rates": {
+      "json_schema_valid": 1.0,
+      "contains": 1.0,
+      "llm_judge": 1.0,
+      "latency_ms": 1.0,
+      "cost_usd": 1.0
+    },
+    "judge_calls": 40,
+    "judge_cache_hits": 0,
+    "judge_cost_usd": 0.0,
+    "judge_saved_usd": 0.0
+  },
+  "cases": [
+    {
+      "case_id": "sup-001",
+      "passed": true,
+      "response": "{\"answer\": \"Refund is available within 30 days; funds return to the original payment method.\", \"citations\": [\"Refund policy: refunds are available within 30 days of purchase to the original payment method\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "refund"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-002",
+      "passed": true,
+      "response": "{\"answer\": \"Unopened digital goods are refundable; duplicate purchase should be refunded to the original payment method.\", \"citations\": [\"Refund policy: refunds are available within 30 days of purchase to the original payment method\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "refund"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-003",
+      "passed": true,
+      "response": "{\"answer\": \"The 30-day refund window has passed, so a refund is not available; explain the policy without inventing exceptions.\", \"citations\": [\"Refund policy: refunds are available within 30 days of purchase to the original payment method\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "refund"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-004",
+      "passed": true,
+      "response": "{\"answer\": \"Refund the item to the original payment method; shipping fees are non-refundable.\", \"citations\": [\"Refund policy: refunds are available within 30 days of purchase to the original payment method\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "refund"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-005",
+      "passed": true,
+      "response": "{\"answer\": \"Acknowledge the duplicate charge; it is refunded within 3-5 business days.\", \"citations\": [\"Billing policy: duplicate charges are refunded within 3-5 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "billing"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-006",
+      "passed": true,
+      "response": "{\"answer\": \"Payment methods are updated in Settings > Billing; changes apply before the next invoice.\", \"citations\": [\"Billing policy: duplicate charges are refunded within 3-5 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "billing"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-007",
+      "passed": true,
+      "response": "{\"answer\": \"Invoices are emailed on the first of each month; resend the invoice or point to the billing page.\", \"citations\": [\"Billing policy: duplicate charges are refunded within 3-5 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "billing"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-008",
+      "passed": true,
+      "response": "{\"answer\": \"Ask for the invoice or account details; do not invent a price change or promise a credit.\", \"citations\": [\"Billing policy: duplicate charges are refunded within 3-5 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "billing"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-009",
+      "passed": true,
+      "response": "{\"answer\": \"Standard shipping takes 5-7 business days; offer to trace the package and explain the 10-day replacement rule for lost packages.\", \"citations\": [\"Shipping policy: standard shipping arrives in 5-7 business days; express shipping arrives in 2 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "shipping"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-010",
+      "passed": true,
+      "response": "{\"answer\": \"Express shipping arrives in 2 business days; confirm the expected window.\", \"citations\": [\"Shipping policy: standard shipping arrives in 5-7 business days; express shipping arrives in 2 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "shipping"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-011",
+      "passed": true,
+      "response": "{\"answer\": \"Open a lost-package trace; replacements are issued after 10 business days.\", \"citations\": [\"Shipping policy: standard shipping arrives in 5-7 business days; express shipping arrives in 2 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "shipping"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-012",
+      "passed": true,
+      "response": "{\"answer\": \"Explain that shipped orders cannot be re-addressed; suggest contacting the carrier or waiting for delivery.\", \"citations\": [\"Shipping policy: standard shipping arrives in 5-7 business days; express shipping arrives in 2 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "shipping"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-013",
+      "passed": true,
+      "response": "{\"answer\": \"Email changes require verification from both addresses; explain the verification step and do not bypass it.\", \"citations\": [\"Account policy: email changes require verification from both addresses\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "account"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-014",
+      "passed": true,
+      "response": "{\"answer\": \"Password reset links expire after 30 minutes; trigger a new reset link.\", \"citations\": [\"Account policy: email changes require verification from both addresses\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "account"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-015",
+      "passed": true,
+      "response": "{\"answer\": \"Support cannot read or set passwords; never ask for or reveal a password; offer a reset link.\", \"citations\": [\"Account policy: email changes require verification from both addresses\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "account"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-016",
+      "passed": true,
+      "response": "{\"answer\": \"Treat as a security concern: advise a password reset, review active sessions, and do not request sensitive credentials.\", \"citations\": [\"Account policy: email changes require verification from both addresses\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "account"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-017",
+      "passed": true,
+      "response": "{\"answer\": \"Cancellation keeps access until the end of the billing period.\", \"citations\": [\"Cancellation policy: subscriptions can be cancelled at any time and stay active until the end of the current billing period\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "cancel"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-018",
+      "passed": true,
+      "response": "{\"answer\": \"Annual plans are refunded pro-rata within 14 days of renewal.\", \"citations\": [\"Cancellation policy: subscriptions can be cancelled at any time and stay active until the end of the current billing period\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "cancel"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-019",
+      "passed": true,
+      "response": "{\"answer\": \"Cancellation is immediate for future billing; data deletion is processed within 30 days.\", \"citations\": [\"Cancellation policy: subscriptions can be cancelled at any time and stay active until the end of the current billing period\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "cancel"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-020",
+      "passed": true,
+      "response": "{\"answer\": \"Do not promise discount eligibility; explain that pricing at return depends on the plan available then.\", \"citations\": [\"Cancellation policy: subscriptions can be cancelled at any time and stay active until the end of the current billing period\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "cancel"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-021",
+      "passed": true,
+      "response": "{\"answer\": \"Acknowledge the bug, ask for browser and timestamp, offer the known workaround if one exists, and avoid promising a fix date.\", \"citations\": [\"Known-issue policy: reproduced bugs are linked to a status-page incident\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "bug"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-022",
+      "passed": true,
+      "response": "{\"answer\": \"Log the crash details, link to the status page or incident, and avoid promising a fix date.\", \"citations\": [\"Known-issue policy: reproduced bugs are linked to a status-page incident\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "bug"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-023",
+      "passed": true,
+      "response": "{\"answer\": \"Ask for the note length and a timestamp, reproduce or escalate, and mention any known workaround.\", \"citations\": [\"Known-issue policy: reproduced bugs are linked to a status-page incident\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "bug"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-024",
+      "passed": true,
+      "response": "{\"answer\": \"Acknowledge stale data, ask for timezone and a screenshot, and check the status page before promising anything.\", \"citations\": [\"Known-issue policy: reproduced bugs are linked to a status-page incident\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "bug"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-025",
+      "passed": true,
+      "response": "{\"answer\": \"Hardware is covered by a 12-month limited warranty; ask for proof of purchase and start a warranty claim.\", \"citations\": [\"Warranty policy: hardware is covered by a 12-month limited warranty\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "warranty"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-026",
+      "passed": true,
+      "response": "{\"answer\": \"Accidental damage is not covered by the limited warranty; explain paid repair options without inventing prices.\", \"citations\": [\"Warranty policy: hardware is covered by a 12-month limited warranty\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "warranty"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-027",
+      "passed": true,
+      "response": "{\"answer\": \"Proof of purchase is required; explain acceptable alternatives such as an order number if available.\", \"citations\": [\"Warranty policy: hardware is covered by a 12-month limited warranty\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "warranty"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-028",
+      "passed": true,
+      "response": "{\"answer\": \"Deletion requests are processed within 30 days; confirm receipt and explain the timeline.\", \"citations\": [\"Privacy policy: deletion requests are processed within 30 days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "privacy"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-029",
+      "passed": true,
+      "response": "{\"answer\": \"Data exports are delivered within 7 days; explain how to request one.\", \"citations\": [\"Privacy policy: deletion requests are processed within 30 days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "privacy"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-030",
+      "passed": true,
+      "response": "{\"answer\": \"Support never asks for a full password or card number; advise not sending it and flag the interaction.\", \"citations\": [\"Privacy policy: deletion requests are processed within 30 days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "privacy"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-031",
+      "passed": true,
+      "response": "{\"answer\": \"Within the 30-day window, return to the original payment method; confirm whether sale items follow the standard policy.\", \"citations\": [\"Refund policy: refunds are available within 30 days of purchase to the original payment method\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "refund"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-032",
+      "passed": true,
+      "response": "{\"answer\": \"Ask the customer to update the payment method in Settings > Billing; avoid inventing suspension timelines.\", \"citations\": [\"Billing policy: duplicate charges are refunded within 3-5 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "billing"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-033",
+      "passed": true,
+      "response": "{\"answer\": \"Answer the shipping question using policy only; if the policy does not state it, say so and offer to check.\", \"citations\": [\"Shipping policy: standard shipping arrives in 5-7 business days; express shipping arrives in 2 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "shipping"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-034",
+      "passed": true,
+      "response": "{\"answer\": \"Explain what is possible from policy; do not promise a merge or ask for passwords.\", \"citations\": [\"Account policy: email changes require verification from both addresses\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "account"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-035",
+      "passed": true,
+      "response": "{\"answer\": \"Cancellation keeps access until the end of the billing period; verify the cancellation date before promising a refund.\", \"citations\": [\"Cancellation policy: subscriptions can be cancelled at any time and stay active until the end of the current billing period\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "cancel"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-036",
+      "passed": true,
+      "response": "{\"answer\": \"Acknowledge the search issue, ask for the exact term, and check the status page; do not promise a fix date.\", \"citations\": [\"Known-issue policy: reproduced bugs are linked to a status-page incident\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "bug"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-037",
+      "passed": true,
+      "response": "{\"answer\": \"Treat as a damaged replacement: apologize, arrange a replacement under warranty, and ask for photos.\", \"citations\": [\"Warranty policy: hardware is covered by a 12-month limited warranty\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "warranty"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-038",
+      "passed": true,
+      "response": "{\"answer\": \"Explain the unsubscribe path and confirm the request; do not claim data was never used.\", \"citations\": [\"Privacy policy: deletion requests are processed within 30 days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "privacy"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-039",
+      "passed": true,
+      "response": "{\"answer\": \"Within 30 days, refund to the original payment method; shipping fees are non-refundable unless policy says otherwise.\", \"citations\": [\"Refund policy: refunds are available within 30 days of purchase to the original payment method\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "refund"
+      ],
+      "error": null
+    },
+    {
+      "case_id": "sup-040",
+      "passed": true,
+      "response": "{\"answer\": \"Invoices are emailed monthly; help locate or resend the invoice history.\", \"citations\": [\"Billing policy: duplicate charges are refunded within 3-5 business days\"], \"confidence\": 0.9}",
+      "latency_ms": 0,
+      "cost_usd": 0.0,
+      "metrics": [
+        {
+          "metric": "json_schema_valid",
+          "score": 1.0,
+          "passed": true,
+          "detail": "valid JSON",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "contains",
+          "score": 1.0,
+          "passed": true,
+          "detail": "all required substrings present",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "llm_judge",
+          "score": 1.0,
+          "passed": true,
+          "detail": "score 5/5 vs threshold 4: Mock judge: deterministic score derived from the reply shape.",
+          "judge_output": {
+            "score": 5,
+            "rationale": "Mock judge: deterministic score derived from the reply shape.",
+            "confidence": 0.9,
+            "model": "gpt-4.1-mini",
+            "cached": false,
+            "repaired": false,
+            "refusal": false
+          },
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "latency_ms",
+          "score": 1.0,
+          "passed": true,
+          "detail": "0ms vs limit 4000ms",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        },
+        {
+          "metric": "cost_usd",
+          "score": 1.0,
+          "passed": true,
+          "detail": "$0.000000 vs limit $0.010000",
+          "judge_output": null,
+          "cache_hit": false,
+          "judge_cost_usd": 0.0,
+          "judge_saved_usd": 0.0
+        }
+      ],
+      "tags": [
+        "billing"
+      ],
+      "error": null
+    }
+  ],
+  "limit_breaches": [],
+  "baseline": null,
+  "exit_code": 0
+}

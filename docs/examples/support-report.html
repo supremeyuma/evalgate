@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EvalGate report — support-reply-quality</title>
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --pass: #067647;
+      --pass-bg: #ecfdf3;
+      --fail: #b42318;
+      --fail-bg: #fef3f2;
+      --warn: #b54708;
+      --accent: #175cd3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 40px 24px 64px;
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink); background: #f9fafb;
+    }
+    main { max-width: 1080px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+    h1 { font-size: 24px; margin: 0; letter-spacing: -0.02em; }
+    h2 { font-size: 16px; margin: 32px 0 12px; }
+    .muted { color: var(--muted); }
+    .verdict {
+      display: inline-block; padding: 6px 12px; border-radius: 999px;
+      font-weight: 600; font-size: 13px;
+    }
+    .verdict.pass { color: var(--pass); background: var(--pass-bg); }
+    .verdict.fail { color: var(--fail); background: var(--fail-bg); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 24px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+    .card .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .card .value { font-size: 22px; font-weight: 650; margin-top: 4px; }
+    .banner { margin-top: 20px; padding: 14px 16px; border-radius: 10px; border: 1px solid; }
+    .banner.fail { color: var(--fail); background: var(--fail-bg); border-color: #fecdca; }
+    .banner.warn { color: var(--warn); background: #fffaeb; border-color: #fedf89; }
+    .banner.info { color: var(--accent); background: #eff8ff; border-color: #b2ddff; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; background: #fcfcfd; }
+    tr:last-child td { border-bottom: none; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .pill.pass { color: var(--pass); background: var(--pass-bg); }
+    .pill.fail { color: var(--fail); background: var(--fail-bg); }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
+    details { margin-top: 8px; }
+    summary { cursor: pointer; color: var(--accent); }
+    footer { margin-top: 40px; color: var(--muted); font-size: 12px; }
+    @media print { body { background: #fff; padding: 0; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>support-reply-quality</h1>
+      <div class="muted">
+        mock/gpt-4.1-mini ·
+        mock mode ·
+        run 22 ms
+      </div>
+    </div>
+      <span class="verdict pass">PASSED</span>
+  </header>
+
+  <section class="cards">
+    <div class="card">
+      <div class="label">Pass rate</div>
+      <div class="value">100.0%</div>
+      <div class="muted">40 / 40 cases</div>
+    </div>
+    <div class="card">
+      <div class="label">Wilson 95% CI</div>
+      <div class="value" style="font-size: 18px">91.2% – 100.0%</div>
+    </div>
+    <div class="card">
+      <div class="label">Total cost</div>
+      <div class="value">$0.0000</div>
+      <div class="muted">nearest-rank p95 0 ms</div>
+    </div>
+    <div class="card">
+      <div class="label">Errors</div>
+      <div class="value">0</div>
+      <div class="muted">0 failed by metric</div>
+    </div>
+    <div class="card">
+      <div class="label">Judge cache</div>
+      <div class="value">0% hit</div>
+      <div class="muted">0 / 40 · saved $0.0000</div>
+    </div>
+  </section>
+
+
+
+  <h2>Cases</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Case</th><th>Verdict</th><th>Failing metric</th><th>Detail</th><th>Latency</th><th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>sup-001</code><div class="muted">refund</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-002</code><div class="muted">refund</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-003</code><div class="muted">refund</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-004</code><div class="muted">refund</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-005</code><div class="muted">billing</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-006</code><div class="muted">billing</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-007</code><div class="muted">billing</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-008</code><div class="muted">billing</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-009</code><div class="muted">shipping</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-010</code><div class="muted">shipping</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-011</code><div class="muted">shipping</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-012</code><div class="muted">shipping</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-013</code><div class="muted">account</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-014</code><div class="muted">account</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-015</code><div class="muted">account</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-016</code><div class="muted">account</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-017</code><div class="muted">cancel</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-018</code><div class="muted">cancel</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-019</code><div class="muted">cancel</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-020</code><div class="muted">cancel</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-021</code><div class="muted">bug</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-022</code><div class="muted">bug</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-023</code><div class="muted">bug</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-024</code><div class="muted">bug</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-025</code><div class="muted">warranty</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-026</code><div class="muted">warranty</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-027</code><div class="muted">warranty</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-028</code><div class="muted">privacy</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-029</code><div class="muted">privacy</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-030</code><div class="muted">privacy</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-031</code><div class="muted">refund</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-032</code><div class="muted">billing</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-033</code><div class="muted">shipping</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-034</code><div class="muted">account</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-035</code><div class="muted">cancel</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-036</code><div class="muted">bug</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-037</code><div class="muted">warranty</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-038</code><div class="muted">privacy</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-039</code><div class="muted">refund</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+      <tr>
+        <td><code>sup-040</code><div class="muted">billing</div></td>
+        <td>
+            <span class="pill pass">pass</span>
+        </td>
+        <td>
+        </td>
+        <td>
+<span class="muted">all metrics passed</span>        </td>
+        <td>0 ms</td>
+        <td>$0.0000</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <footer>Generated by EvalGate 2026-11-12 19:12 UTC. This file is self-contained; no external assets.</footer>
+</main>
+</body>
+</html>
