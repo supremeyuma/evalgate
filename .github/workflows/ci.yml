@@ -67,6 +67,9 @@ jobs:
       - name: Typecheck
         run: uv run mypy
 
+      - name: Actionlint
+        uses: raven-actions/actionlint@v2
+
       - name: Migrations
         run: uv run alembic upgrade head
 

@@ -82,11 +82,19 @@ Redis containers), 92% coverage, mypy strict clean.
 
 ## E5 — GitHub Action and PR reporting (M4)
 
-- [ ] Composite action, artifacts, idempotent PR comment
-- [ ] Example consumer workflow
-- [ ] Flaky-run policy documented
+- [x] Composite action, artifacts, idempotent PR comment
+- [x] Example consumer workflow
+- [x] Flaky-run policy documented
 
-**Gate evidence:** _pending_
+**Gate evidence:** `actionlint` (rhysd/actionlint container) exits 0 over the action, CI, and
+consumer workflows. The comment is ASCII-safe, carries exactly one
+`<!-- evalgate:report -->` marker, renders baseline/current/delta/verdict, hard-limit
+banners, judge cache stats, and up to ten regressed cases with per-metric detail (15 tests,
+including gh create/update/read-only paths). The consumer example ships a committed baseline
+and runs offline: `scripts/demo_ci.ps1` → `DRY RUN COMPLETE (exit 0)`. Provider/judge
+retries and the stricter "errors exit 3" flaky policy are documented in
+[`failure-modes.md`](failure-modes.md), with a deviation note from the plan's
+"mark flaky and pass" default.
 
 ## E6 — Polish, demo, release (M5)
 

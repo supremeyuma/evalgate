@@ -33,6 +33,7 @@ async def _drop_all(url: str) -> None:
     try:
         async with engine.begin() as connection:
             await connection.run_sync(Base.metadata.drop_all)
+            await connection.execute(text("DROP TABLE IF EXISTS alembic_version"))
     finally:
         await engine.dispose()
 
