@@ -13,10 +13,39 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  DATABASE_URL: postgresql+asyncpg://test:test@localhost:5432/test
+  REDIS_URL: redis://localhost:6379/0
+  EVALGATE_TEST_DATABASE_URL: postgresql+asyncpg://test:test@localhost:5432/test
+  EVALGATE_TEST_REDIS_URL: redis://localhost:6379/0
+
 jobs:
   verify:
     name: lint, typecheck, tests
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v4
 
@@ -38,7 +67,10 @@ jobs:
       - name: Typecheck
         run: uv run mypy
 
-      - name: Tests (offline)
+      - name: Migrations
+        run: uv run alembic upgrade head
+
+      - name: Tests (offline providers, live services)
         run: uv run pytest --cov --cov-report=term-missing --cov-report=xml
 
       - name: Upload coverage

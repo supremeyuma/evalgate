@@ -11,7 +11,7 @@ pytestmark = pytest.mark.integration
 
 async def test_postgres_cache_roundtrip() -> None:
     pytest.importorskip("testcontainers.postgres")
-    from testcontainers.postgres import PostgresContainer
+    from testcontainers.community.postgres import PostgresContainer
 
     try:
         container = PostgresContainer("postgres:16-alpine")
