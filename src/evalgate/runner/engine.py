@@ -10,6 +10,7 @@ from decimal import Decimal
 
 from jinja2 import Environment, StrictUndefined, TemplateError
 
+from evalgate.judges.cache import JudgeCache
 from evalgate.judges.judge import Judge
 from evalgate.metrics import evaluate_metric
 from evalgate.metrics.base import MetricContext
@@ -59,6 +60,7 @@ def _build_judges(
     *,
     provider: Provider,
     judge_model: str,
+    cache: JudgeCache | None,
 ) -> dict[int, Judge]:
     judges: dict[int, Judge] = {}
     for index, spec in enumerate(loaded.suite.metrics):
@@ -72,6 +74,7 @@ def _build_judges(
             base_model=loaded.suite.model,
             model_name=loaded.suite.judge.model or judge_model,
             rubric_text=loaded.rubric_texts[rubric],
+            cache=cache,
         )
     return judges
 
@@ -84,6 +87,7 @@ async def run_suite(
     judge_model: str = "gpt-4.1-mini",
     options: RunOptions | None = None,
     baseline: Baseline | None = None,
+    cache: JudgeCache | None = None,
 ) -> RunReport:
     """Run every case with bounded concurrency and return a complete report."""
 
@@ -101,6 +105,7 @@ async def run_suite(
         loaded,
         provider=judge_provider or provider,
         judge_model=judge_model,
+        cache=cache,
     )
     semaphore = asyncio.Semaphore(run_options.concurrency)
     started_at = datetime.now(UTC)

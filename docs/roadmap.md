@@ -48,12 +48,20 @@ small-sample cases. 173 tests, 94% coverage, mypy strict clean, zero live calls.
 
 ## E3 — LLM judges, caching, calibration (M2)
 
-- [ ] Anchored rubric prompt + strict JSON contract + repair attempt
-- [ ] Content-addressed judge cache (Postgres + local)
-- [ ] Two-judge calibration with agreement/kappa
-- [ ] Failure-path tests
+- [x] Anchored rubric prompt + strict JSON contract + repair attempt
+- [x] Content-addressed judge cache (Postgres + local)
+- [x] Two-judge calibration with agreement/kappa
+- [x] Failure-path tests
 
-**Gate evidence:** _pending_
+**Gate evidence:** judge output is parsed strictly (fenced JSON, prose, out-of-range,
+missing fields) with one repair attempt; refusals score 1 with a documented flag; provider
+failure records `judge_error` without crashing the run. Cache: cold support run → 40 judge
+calls, 0 hits; warm run → 0 calls, 40 hits. Rubric edits invalidate. Local SQLite backend
+plus Postgres backend (integration test runs under Docker; `judge_cache` upsert is
+idempotent). Calibration: `evalgate calibrate --suite examples/support/suite.yaml --mock
+--cases 30` → exact 100%, within-1 100%, kappa 1.000, labelled mock in
+[`calibration.md`](calibration.md). 198 tests, 93% coverage, mypy strict clean. ADR-004
+records the cache key.
 
 ## E4 — Persistence, concurrency, baselines (M3)
 

@@ -35,6 +35,7 @@ class Settings(BaseSettings):
 
     judge_model: str = "gpt-4.1-mini"
     judge_cache_dir: Path = Field(default=Path(".evalgate-cache"))
+    judge_cache_backend: str = "local"
 
     provider_timeout_s: float = 60.0
     provider_max_attempts: int = 4

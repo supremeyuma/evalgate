@@ -6,7 +6,7 @@ import math
 from collections import Counter
 from collections.abc import Sequence
 
-from evalgate.models.result import CaseResult, RunSummary
+from evalgate.models.result import CaseResult, MetricResult, RunSummary
 
 Z_95 = 1.959963984540054
 
@@ -62,13 +62,17 @@ def summarize(cases: Sequence[CaseResult]) -> RunSummary:
 
     metric_counts: Counter[str] = Counter()
     metric_passes: Counter[str] = Counter()
+    judge_metrics: list[MetricResult] = []
     for case in cases:
         for metric in case.metrics:
             metric_counts[metric.metric] += 1
             if metric.passed:
                 metric_passes[metric.metric] += 1
+            if metric.metric == "llm_judge":
+                judge_metrics.append(metric)
 
     metric_pass_rates = {name: metric_passes[name] / count for name, count in metric_counts.items()}
+    judge_cache_hits = sum(1 for metric in judge_metrics if metric.cache_hit)
 
     return RunSummary(
         total=total,
@@ -81,4 +85,8 @@ def summarize(cases: Sequence[CaseResult]) -> RunSummary:
         cost_usd=sum(case.cost_usd for case in cases),
         p95_latency_ms=nearest_rank_percentile([case.latency_ms for case in cases], 95.0),
         metric_pass_rates=metric_pass_rates,
+        judge_calls=len(judge_metrics) - judge_cache_hits,
+        judge_cache_hits=judge_cache_hits,
+        judge_cost_usd=sum(metric.judge_cost_usd for metric in judge_metrics),
+        judge_saved_usd=sum(metric.judge_saved_usd for metric in judge_metrics),
     )
